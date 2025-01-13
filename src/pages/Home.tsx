@@ -1,11 +1,11 @@
-import { ModeToggle } from "@/components/mode-toggle";
+
+import Container from "@/components/ui/Container";
 
 const Home = () => {
   return (
-    <div>
-      This is home
-      <ModeToggle />
-    </div>
+    <Container>
+      <h1>This is home</h1>
+    </Container>
   );
 };
 
