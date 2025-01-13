@@ -9,6 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { NavLinks } from "./NavLinks";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -27,6 +28,8 @@ export function MobileNav() {
         </SheetHeader>
         <nav className="flex flex-col space-y-4 mt-4">
           <NavLinks />
+          <ModeToggle />
+
           <Button variant="outline" className="w-full">
             Login
           </Button>

@@ -5,6 +5,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import Dashboard from "../pages/dashboard/Dashboard";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 const MainRouter = () => {
   return (
@@ -18,6 +19,7 @@ const MainRouter = () => {
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="*" element={<NotFoundPage/>}/>
     </Routes>
   );
 };
