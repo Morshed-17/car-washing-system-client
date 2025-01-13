@@ -4,7 +4,7 @@ import { Link } from "react-router";
 function LoginButton() {
   return (
     <Link to="/auth/login">
-      <Button variant="outline">Login</Button>
+      <Button className="">Login</Button>
     </Link>
   );
 }

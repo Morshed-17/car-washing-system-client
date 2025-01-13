@@ -1,5 +1,5 @@
 import { RegisterSchema } from "@/schema/index.ts";
-import CardWrapper from "../CardWrapper";
+import CardWrapper from "./CardWrapper";
 import * as z from "zod";
 
 import { useForm } from "react-hook-form";
