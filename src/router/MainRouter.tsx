@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import Dashboard from "../pages/dashboard/Dashboard";
 import NotFoundPage from "@/pages/NotFoundPage";
+import AuthLayout from "@/layouts/AuthLayout";
 
 const MainRouter = () => {
   return (
@@ -17,9 +18,11 @@ const MainRouter = () => {
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<Dashboard />} />
       </Route>
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="*" element={<NotFoundPage/>}/>
+      <Route path="/auth" element={<AuthLayout />}>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+      </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

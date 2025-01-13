@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { NavLinks } from "./NavLinks";
 import { ModeToggle } from "@/components/mode-toggle";
+import LoginButton from "./LoginButton";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -30,9 +31,7 @@ export function MobileNav() {
           <NavLinks />
           <ModeToggle />
 
-          <Button variant="outline" className="w-full">
-            Login
-          </Button>
+          <LoginButton/>
         </nav>
       </SheetContent>
     </Sheet>
