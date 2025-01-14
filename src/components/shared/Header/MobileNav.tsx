@@ -23,15 +23,16 @@ export function MobileNav() {
           <span className="sr-only">Toggle menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="right">
+      <SheetContent side="left">
         <SheetHeader>
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
         <nav className="flex flex-col space-y-4 mt-4">
+          <div className="flex gap-4 items-center justify-between ">
+            <LoginButton />
+            <ModeToggle />
+          </div>
           <NavLinks />
-          <ModeToggle />
-
-          <LoginButton/>
         </nav>
       </SheetContent>
     </Sheet>

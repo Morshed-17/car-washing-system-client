@@ -19,9 +19,13 @@ import { useLoginMutation } from "@/redux/api/endpoints/authApi";
 import { ApiError } from "@/types";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/features/userSlice";
+import { toast } from "sonner";
 
 export function LoginForm() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [loging, { isLoading }] = useLoginMutation();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -37,7 +41,11 @@ export function LoginForm() {
     try {
       const result = await loging({ email, password }).unwrap();
 
-      result.success && navigate("/");
+      if (result.success && result.token) {
+        dispatch(setUser({ user: result.data, token: result.token }));
+        toast.success("Account Logged In Succesfully");
+        navigate("/");
+      }
     } catch (err: any) {
       const error = err.data as ApiError;
       form.setError("root", {

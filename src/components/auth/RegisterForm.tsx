@@ -14,11 +14,21 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useRegisterMutation } from "@/redux/api/endpoints/authApi";
+import {
+  useLoginMutation,
+  useRegisterMutation,
+} from "@/redux/api/endpoints/authApi";
 import { Loader2 } from "lucide-react";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/features/userSlice";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export function RegisterForm() {
   const [register, { isLoading }] = useRegisterMutation();
+  const [login] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -40,14 +50,26 @@ export function RegisterForm() {
         message: "Passwords doesn't match",
       });
     try {
-      const result = await register({
+      //* register the user
+
+      await register({
         name,
         email,
         address,
         phone: phone.toString(),
         password,
       }).unwrap();
-      console.log(result);
+
+      //* login the user
+      // Call login API after registration
+      const loginResult = await login({ email, password }).unwrap();
+
+      //* Dispatch user data and token
+      if (loginResult.success && loginResult.token) {
+        dispatch(setUser({ user: loginResult.data, token: loginResult.token }));
+        toast.success("Account Created Succesfully")
+        navigate("/");
+      }
     } catch (err: any) {
       form.setError("root", {
         type: "server",
@@ -66,7 +88,8 @@ export function RegisterForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
             <p className="text-center text-destructive">
-              {form.formState.errors["root"]?.message && "Registration Failed. Please try again with differnt gmail"}
+              {form.formState.errors["root"]?.message &&
+                "Registration Failed. Please try again with differnt gmail"}
             </p>
             <div className="flex gap-4 flex-col md:flex-row">
               <FormField

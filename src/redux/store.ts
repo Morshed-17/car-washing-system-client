@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./features/userSlice";
+import persistedUserReducer from "./features/userSlice";
 import { authApi } from "./api/endpoints/authApi";
 import persistStore from "redux-persist/es/persistStore";
 import { setupListeners } from "@reduxjs/toolkit/query";
@@ -7,7 +7,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
-    user: userReducer,
+    user: persistedUserReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(
@@ -25,4 +25,3 @@ export { store, persistor };
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
-
