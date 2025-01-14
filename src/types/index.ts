@@ -1,10 +1,3 @@
-//* General type for api response
-export interface ApiResponse<T> {
-  success: true;
-  statusCode: number;
-  message: string;
-  data: T;
-}
 //* Genral type for user
 export interface User {
   _id: string;
@@ -18,19 +11,24 @@ export interface User {
   __v: number;
 }
 
-export type SignupSuccessResponse = ApiResponse<User>;
-export interface LoginSuccessResponse extends ApiResponse<User> {
-  token: string;
-}
-
 export interface ApiErrorMessage {
   path: string; // Field that caused the error
   message: string; // Error message
 }
-
-export interface ApiErrorResponse {
-  success: false;
+export type ApiResponse<T> = {
+  success: true;
   message: string;
-  errorMessages: ApiErrorMessage[];
-  stack?: string; // Optional, depending on whether you want to expose stack traces
-}
+  statusCode: number;
+  data: T;
+};
+
+export type ApiError = {
+  success: boolean;
+  message: string;
+  errorMessages?: ApiErrorMessage[];
+  stack?: string;
+};
+
+// Now you can use this type for any API response
+export type SignupResponse = ApiResponse<User>;
+export type LoginResponse = ApiResponse<User & { token: string }>;

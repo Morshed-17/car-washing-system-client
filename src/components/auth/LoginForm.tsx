@@ -15,8 +15,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useLoginMutation } from "@/redux/api/endpoints/authApi";
+import { ApiError } from "@/types";
+import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router";
 
 export function LoginForm() {
+  const navigate = useNavigate();
+  const [loging, { isLoading }] = useLoginMutation();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -25,11 +31,21 @@ export function LoginForm() {
     },
   });
 
-  const onSubmit = () => {
-    const data = form.getValues();
-    console.log({
-      data,
-    });
+  const onSubmit = async () => {
+    const formData = form.getValues();
+    const { email, password } = formData;
+    try {
+      const result = await loging({ email, password }).unwrap();
+
+      result.success && navigate("/");
+    } catch (err: any) {
+      const error = err.data as ApiError;
+      form.setError("root", {
+        type: "server",
+        message: error?.message,
+      });
+      console.log(err);
+    }
   };
   return (
     <CardWrapper
@@ -41,6 +57,9 @@ export function LoginForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
+            <p className="text-center text-destructive">
+              {form.formState.errors["root"]?.message}
+            </p>
             <FormField
               control={form.control}
               name="email"
@@ -73,7 +92,9 @@ export function LoginForm() {
               )}
             />
           </div>
-          <Button className="w-full">Login</Button>
+          <Button className="w-full">
+            {isLoading ? <Loader2 className="rotate-180"></Loader2> : "Login"}
+          </Button>
         </form>
       </Form>
     </CardWrapper>

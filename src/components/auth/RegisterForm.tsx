@@ -14,8 +14,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRegisterMutation } from "@/redux/api/endpoints/authApi";
+import { Loader2 } from "lucide-react";
 
 export function RegisterForm() {
+  const [register, { isLoading }] = useRegisterMutation();
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -28,11 +31,29 @@ export function RegisterForm() {
     },
   });
 
-  const onSubmit = () => {
-    const data = form.getValues();
-    console.log({
-      data,
-    });
+  const onSubmit = async () => {
+    const formData = form.getValues();
+    const { name, email, password, confirmPassword, phone, address } = formData;
+    if (confirmPassword !== password)
+      return form.setError("confirmPassword", {
+        type: "match",
+        message: "Passwords doesn't match",
+      });
+    try {
+      const result = await register({
+        name,
+        email,
+        address,
+        phone: phone.toString(),
+        password,
+      }).unwrap();
+      console.log(result);
+    } catch (err: any) {
+      form.setError("root", {
+        type: "server",
+        message: err?.data?.message,
+      });
+    }
   };
   return (
     <CardWrapper
@@ -44,6 +65,9 @@ export function RegisterForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
+            <p className="text-center text-destructive">
+              {form.formState.errors["root"]?.message && "Registration Failed. Please try again with differnt gmail"}
+            </p>
             <div className="flex gap-4 flex-col md:flex-row">
               <FormField
                 control={form.control}
@@ -129,7 +153,13 @@ export function RegisterForm() {
               )}
             />
           </div>
-          <Button className="w-full">Register</Button>
+          <Button className="w-full">
+            {isLoading ? (
+              <Loader2 className="rotate-180"></Loader2>
+            ) : (
+              "Register"
+            )}
+          </Button>
         </form>
       </Form>
     </CardWrapper>
