@@ -8,6 +8,9 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import NotFoundPage from "@/pages/NotFoundPage";
 import AuthLayout from "@/layouts/AuthLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import ManageServices from "@/pages/dashboard/ManageServices";
+import ManageSlots from "@/pages/dashboard/ManageSlots";
+import ManageUesrs from "@/pages/dashboard/ManageUesrs";
 
 const MainRouter = () => {
   return (
@@ -25,6 +28,9 @@ const MainRouter = () => {
         }
       >
         <Route index element={<Dashboard />} />
+        <Route path="services" element={<ManageServices />} />
+        <Route path="slots" element={<ManageSlots />} />
+        <Route path="users" element={<ManageUesrs />} />
       </Route>
       <Route path="/auth" element={<AuthLayout />}>
         <Route path="login" element={<Login />} />
