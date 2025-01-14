@@ -19,7 +19,7 @@ const MainRouter = () => {
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute allowedRoles={["user"]}>
+          <ProtectedRoute allowedRoles={["admin"]}>
             <DashboardLayout />
           </ProtectedRoute>
         }
