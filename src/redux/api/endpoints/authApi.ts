@@ -1,14 +1,23 @@
+import { SignupSuccessResponse, User } from "@/types";
 import { baseApi } from "../baseApi";
 
-const authApi = baseApi.injectEndpoints({
+export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    loginUser: builder.query({
-      query: () => "/auth/login",
+    register: builder.mutation<SignupSuccessResponse, Partial<User>>({
+      query: (user) => ({
+        url: "/auth/signup",
+        method: "POST",
+        body: user,
+      }),
     }),
-    registerUser: builder.mutation({
-      query: () => "/auth/signup",
+    loginUser: builder.query({
+      query: (credentials) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: credentials,
+      }),
     }),
   }),
 });
 
-export const { useLoginUserQuery, useRegisterUserMutation } = authApi;
+export const { useLoginUserQuery, useRegisterMutation } = authApi;
