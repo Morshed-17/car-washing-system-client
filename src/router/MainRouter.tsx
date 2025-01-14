@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Dashboard from "../pages/dashboard/Dashboard";
 import NotFoundPage from "@/pages/NotFoundPage";
 import AuthLayout from "@/layouts/AuthLayout";
+import ProtectedRoute from "./ProtectedRoute";
 
 const MainRouter = () => {
   return (
@@ -15,7 +16,14 @@ const MainRouter = () => {
         <Route index element={<Home />} />
       </Route>
 
-      <Route path="/dashboard" element={<DashboardLayout />}>
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={["user"]}>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<Dashboard />} />
       </Route>
       <Route path="/auth" element={<AuthLayout />}>

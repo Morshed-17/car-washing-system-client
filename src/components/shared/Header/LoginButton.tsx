@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { Link } from "react-router";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -11,10 +11,11 @@ import {
 import { LogOut, User } from "lucide-react";
 import { logout } from "@/redux/features/userSlice";
 import { toast } from "sonner";
+import useAuth from "@/hooks/useAuth";
 // Assuming you have a logout action
 
 function LoginButton() {
-  const { user, token } = useAppSelector((state) => state.user);
+  const { user, token } = useAuth();
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {

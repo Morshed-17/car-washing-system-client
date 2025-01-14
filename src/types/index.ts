@@ -4,7 +4,7 @@ export interface User {
   name: string;
   email: string;
   phone: string;
-  role: string;
+  role: "admin" | "user";
   address: string;
   createdAt: string;
   updatedAt: string;
@@ -20,7 +20,7 @@ export type ApiResponse<T> = {
   message: string;
   statusCode: number;
   data: T;
-  token?: string
+  token?: string;
 };
 
 export type ApiError = {
