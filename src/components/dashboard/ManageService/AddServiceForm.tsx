@@ -22,7 +22,7 @@ interface AddServiceFormProps {
 }
 
 export default function AddServiceForm({ onClose }: AddServiceFormProps) {
-  const [addService, { isLoading }] = useAddServiceMutation();
+  const [addService] = useAddServiceMutation();
   const form = useForm<z.infer<typeof AddServiceSchema>>({
     resolver: zodResolver(AddServiceSchema),
     defaultValues: {

@@ -23,7 +23,18 @@ export const serviceApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Service"],
     }),
+    deleteService: builder.mutation<ApiResponse<any>, { serviceId: string }>({
+      query: (payload) => ({
+        url: `/services/${payload.serviceId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Service"],
+    }),
   }),
 });
 
-export const { useGetAllServicesQuery, useAddServiceMutation } = serviceApi;
+export const {
+  useGetAllServicesQuery,
+  useAddServiceMutation,
+  useDeleteServiceMutation,
+} = serviceApi;

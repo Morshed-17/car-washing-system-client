@@ -1,4 +1,6 @@
 import { AddServiceModal } from "@/components/dashboard/ManageService/AddServiceModal";
+import { DeleteServiceModal } from "@/components/dashboard/ManageService/DeleteServiceModal";
+import { ServiceTableSkeleton } from "@/components/skeletonts/service-table-skeleton";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -14,7 +16,7 @@ import { useGetAllServicesQuery } from "@/redux/api/endpoints/serviceApi";
 import { Edit, Trash } from "lucide-react";
 
 export function ManageServices() {
-  const { data } = useGetAllServicesQuery(undefined);
+  const { data, isLoading } = useGetAllServicesQuery(undefined);
   const services = data?.data;
 
   return (
@@ -39,24 +41,28 @@ export function ManageServices() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {services?.map((service) => (
-            <TableRow key={service._id}>
-              <TableCell className="font-medium">{service.name}</TableCell>
-              <TableCell>{service.description}</TableCell>
-              <TableCell>{service.price}</TableCell>
-              <TableCell className=""></TableCell>
-              <TableCell className="">
-                <Button size="icon">
-                  <Edit />
-                </Button>
-              </TableCell>
-              <TableCell className="text-right">
-                <Button size="icon" variant="destructive">
-                  <Trash />
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
+          {isLoading ? (
+            <ServiceTableSkeleton />
+          ) : (
+            <>
+              {services?.map((service) => (
+                <TableRow key={service._id}>
+                  <TableCell className="font-medium">{service.name}</TableCell>
+                  <TableCell>{service.description}</TableCell>
+                  <TableCell>{service.price}</TableCell>
+                  <TableCell className=""></TableCell>
+                  <TableCell className="">
+                    <Button size="icon">
+                      <Edit />
+                    </Button>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DeleteServiceModal serviceId={service._id}/>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </>
+          )}
         </TableBody>
         <TableFooter></TableFooter>
       </Table>
