@@ -1,7 +1,8 @@
 import { AddServiceModal } from "@/components/dashboard/ManageService/AddServiceModal";
 import { DeleteServiceModal } from "@/components/dashboard/ManageService/DeleteServiceModal";
+import { UpdateServiceModal } from "@/components/dashboard/ManageService/UpdateServiceModal";
+
 import { ServiceTableSkeleton } from "@/components/skeletonts/service-table-skeleton";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -13,7 +14,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetAllServicesQuery } from "@/redux/api/endpoints/serviceApi";
-import { Edit, Trash } from "lucide-react";
 
 export function ManageServices() {
   const { data, isLoading } = useGetAllServicesQuery(undefined);
@@ -34,10 +34,10 @@ export function ManageServices() {
           <TableRow>
             <TableHead className="w-[200px]">Name</TableHead>
             <TableHead>Description</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead className="">Duration</TableHead>
-            <TableHead className="">Edit</TableHead>
-            <TableHead className="text-right">Delete</TableHead>
+            <TableHead className="w-[200px]">Price</TableHead>
+            <TableHead className="w-[200px]">Duration</TableHead>
+            <TableHead className="w-[100px]">Edit</TableHead>
+            <TableHead className="text-right w-[100px]">Delete</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -46,18 +46,16 @@ export function ManageServices() {
           ) : (
             <>
               {services?.map((service) => (
-                <TableRow key={service._id}>
-                  <TableCell className="font-medium">{service.name}</TableCell>
-                  <TableCell>{service.description}</TableCell>
-                  <TableCell>{service.price}</TableCell>
-                  <TableCell className=""></TableCell>
+                <TableRow key={service?._id}>
+                  <TableCell className="font-medium">{service?.name}</TableCell>
+                  <TableCell>{service?.description}</TableCell>
+                  <TableCell>{service?.price}Tk</TableCell>
+                  <TableCell className="">{service?.duration} Min</TableCell>
                   <TableCell className="">
-                    <Button size="icon">
-                      <Edit />
-                    </Button>
+                    <UpdateServiceModal _id={service?._id} />
                   </TableCell>
                   <TableCell className="text-right">
-                    <DeleteServiceModal serviceId={service._id}/>
+                    <DeleteServiceModal serviceId={service?._id} />
                   </TableCell>
                 </TableRow>
               ))}

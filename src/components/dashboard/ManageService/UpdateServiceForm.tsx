@@ -13,30 +13,55 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAddServiceMutation } from "@/redux/api/endpoints/serviceApi";
+import {
+  useGetSingleServiceQuery,
+  useUpdateServiceMutation,
+} from "@/redux/api/endpoints/serviceApi";
 import { toast } from "sonner";
 import { ApiError } from "@/types";
+import { useEffect } from "react";
 
-interface AddServiceFormProps {
+interface UpdateServiceFormProps {
   onClose: () => void;
+  _id: string;
 }
 
-export default function AddServiceForm({ onClose }: AddServiceFormProps) {
-  const [addService] = useAddServiceMutation();
+export default function UpdateServiceForm({
+  onClose,
+  _id,
+}: UpdateServiceFormProps) {
+  const { data } = useGetSingleServiceQuery({ serviceId: _id });
+
+  const [updateService] = useUpdateServiceMutation();
   const form = useForm<z.infer<typeof AddServiceSchema>>({
-    resolver: zodResolver(AddServiceSchema),
+    resolver: zodResolver(AddServiceSchema.partial()),
     defaultValues: {
       name: "",
-      duration: 0,
-      price: 0,
+      duration: undefined,
+      price: undefined,
       description: "",
-      isDeleted: false,
-    }
+    },
   });
 
+  // Reset form when data changes
+  useEffect(() => {
+    if (data?.data) {
+      form.reset({
+        name: data.data.name || "",
+        duration: data.data.duration || undefined,
+        price: data.data.price || undefined,
+        description: data.data.description || "",
+      });
+    }
+  }, [data, form]);
+
   async function onSubmit(values: z.infer<typeof AddServiceSchema>) {
+    console.log(values);
     try {
-      const result = await addService(values).unwrap();
+      const result = await updateService({
+        updatedService: values,
+        serviceId: _id,
+      }).unwrap();
       toast.success(result.message);
       onClose();
     } catch (err) {
@@ -101,7 +126,7 @@ export default function AddServiceForm({ onClose }: AddServiceFormProps) {
           )}
         />
         <DialogFooter>
-          <Button type="submit">Publish</Button>
+          <Button type="submit">Update</Button>
         </DialogFooter>
       </form>
     </Form>

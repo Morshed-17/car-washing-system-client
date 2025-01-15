@@ -12,6 +12,16 @@ export const serviceApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Service"],
     }),
+    getSingleService: builder.query<
+      ApiResponse<Service>,
+      { serviceId: string }
+    >({
+      query: (payload) => ({
+        url: `/services/${payload.serviceId}`,
+        method: "GET",
+      }),
+      providesTags: ["Service"],
+    }),
     addService: builder.mutation<
       ApiResponse<Service[]>,
       z.infer<typeof AddServiceSchema>
@@ -20,6 +30,20 @@ export const serviceApi = baseApi.injectEndpoints({
         url: "/services",
         method: "POST",
         body: payload,
+      }),
+      invalidatesTags: ["Service"],
+    }),
+    updateService: builder.mutation<
+      ApiResponse<Service[]>,
+      {
+        updatedService: z.infer<typeof AddServiceSchema>;
+        serviceId: string;
+      }
+    >({
+      query: (payload) => ({
+        url: `/services/${payload.serviceId}`,
+        method: "PUT",
+        body: payload.updatedService,
       }),
       invalidatesTags: ["Service"],
     }),
@@ -37,4 +61,6 @@ export const {
   useGetAllServicesQuery,
   useAddServiceMutation,
   useDeleteServiceMutation,
+  useUpdateServiceMutation,
+  useGetSingleServiceQuery
 } = serviceApi;

@@ -7,22 +7,22 @@ export function ServiceTableSkeleton() {
       {[...Array(3)].map((_, i) => (
         <TableRow key={i}>
           <TableCell className="w-[200px]">
-            <Skeleton className="h-4 w-[180px]" />
+            <Skeleton className="h-4 " />
           </TableCell>
           <TableCell>
-            <Skeleton className="h-4 w-[250px]" />
-          </TableCell>
-          <TableCell>
-            <Skeleton className="h-4 w-[80px]" />
+            <Skeleton className="h-4 w-[200px]" />
           </TableCell>
           <TableCell>
             <Skeleton className="h-4 w-[100px]" />
           </TableCell>
           <TableCell>
-            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-4 w-[100px]" />
+          </TableCell>
+          <TableCell>
+            <Skeleton className="h-10 w-10 rounded-md" />
           </TableCell>
           <TableCell className="text-right">
-            <Skeleton className="h-8 w-8 rounded-full ml-auto" />
+            <Skeleton className="h-10 w-10 rounded-md ml-auto" />
           </TableCell>
         </TableRow>
       ))}
