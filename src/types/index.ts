@@ -11,6 +11,19 @@ export interface User {
   __v: number;
 }
 
+//*Service
+export interface Service {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  duration: number;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 export interface ApiErrorMessage {
   path: string; // Field that caused the error
   message: string; // Error message

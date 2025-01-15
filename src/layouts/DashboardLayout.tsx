@@ -56,6 +56,7 @@ export default function Dashboard() {
                           <Link to={path}>{label}</Link>
                         </BreadcrumbLink>
                         <BreadcrumbSeparator />
+                        
                       </>
                     )}
                   </BreadcrumbItem>
