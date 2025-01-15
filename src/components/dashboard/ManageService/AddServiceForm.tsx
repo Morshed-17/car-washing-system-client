@@ -13,12 +13,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAddServiceMutation } from "@/redux/api/endpoints/serviceApi";
+import { toast } from "sonner";
+import { ApiError } from "@/types";
 
 interface AddServiceFormProps {
-    onClose: () => void;
-  }
+  onClose: () => void;
+}
 
-export default function AddServiceForm({onClose}: AddServiceFormProps) {
+export default function AddServiceForm({ onClose }: AddServiceFormProps) {
+  const [addService, { isLoading }] = useAddServiceMutation();
   const form = useForm<z.infer<typeof AddServiceSchema>>({
     resolver: zodResolver(AddServiceSchema),
     defaultValues: {
@@ -30,9 +34,15 @@ export default function AddServiceForm({onClose}: AddServiceFormProps) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof AddServiceSchema>) {
-    console.log(values);
-    onClose()
+  async function onSubmit(values: z.infer<typeof AddServiceSchema>) {
+    try {
+      const result = await addService(values).unwrap();
+      toast.success(result.message);
+      onClose();
+    } catch (err) {
+      const error = err as ApiError;
+      toast.error(error?.message);
+    }
   }
   return (
     <Form {...form}>
