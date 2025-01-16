@@ -1,5 +1,6 @@
-import { LoginResponse, SignupResponse, User } from "@/types";
+import { ApiResponse, LoginResponse, SignupResponse, User } from "@/types";
 import { baseApi } from "../baseApi";
+
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,6 +20,11 @@ export const authApi = baseApi.injectEndpoints({
         }),
       }
     ),
+    getAllUsers: builder.query<ApiResponse<User>, any >({
+      query: () => ({
+        url: "/"
+      })
+    })
   }),
 });
 
