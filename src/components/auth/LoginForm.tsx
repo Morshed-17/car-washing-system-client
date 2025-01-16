@@ -23,7 +23,8 @@ import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/userSlice";
 import { toast } from "sonner";
 
-export function LoginForm() {
+export function LoginForm({ redirect }: { redirect: string }) {
+  
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [loging, { isLoading }] = useLoginMutation();
@@ -44,7 +45,7 @@ export function LoginForm() {
       if (result.success && result.token) {
         dispatch(setUser({ user: result.data, token: result.token }));
         toast.success("Account Logged In Succesfully");
-        navigate("/");
+        navigate(redirect || "/");
       }
     } catch (err: any) {
       const error = err.data as ApiError;

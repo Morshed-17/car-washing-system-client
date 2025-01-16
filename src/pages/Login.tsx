@@ -1,9 +1,11 @@
 import { LoginForm } from "@/components/auth/LoginForm";
+import { useLocation } from "react-router";
 
 const Login = () => {
+  const location = useLocation()
   return (
     <div>
-      <LoginForm />
+      <LoginForm redirect={location?.state?.redirect}/>
     </div>
   );
 };

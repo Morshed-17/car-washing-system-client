@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,6 +17,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useAuth from "@/hooks/useAuth";
+import { useAddReviewMutation } from "@/redux/api/endpoints/reviewApi";
+import { toast } from "sonner";
+import { ApiError } from "@/types";
 
 const formSchema = z.object({
   rating: z.number().min(1, { message: "Please select at least one star" }),
@@ -30,6 +31,7 @@ const formSchema = z.object({
 export function ReviewForm() {
   const { user } = useAuth();
   const [hoveredRating, setHoveredRating] = useState(0);
+  const [addReview] = useAddReviewMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,13 +41,20 @@ export function ReviewForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log({
-        name: user?.name,
-        email: user?.email,
-        ...values
-    });
-    // Handle form submission here
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const review = {
+      username: user?.name,
+      ...values,
+    };
+
+    try {
+      await addReview(review);
+      form.reset();
+      toast.success("Thank you for your feedback");
+    } catch (err) {
+      const error = err as ApiError;
+      toast.error(error.message);
+    }
   }
 
   return (

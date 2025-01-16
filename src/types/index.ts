@@ -38,6 +38,15 @@ export type Slot = {
 };
 
 
+// review
+export type Review ={
+  _id: string;
+  rating: number;
+  feedback: string;
+  username: string;
+}
+
+
 
 export interface ApiErrorMessage {
   path: string; // Field that caused the error
