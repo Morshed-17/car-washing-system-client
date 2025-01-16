@@ -62,3 +62,17 @@ export type SlotStatus =  "cancelled" | "available" | "booked"
 // Now you can use this type for any API response
 export type SignupResponse = ApiResponse<User>;
 export type LoginResponse = ApiResponse<User & { token: string }>;
+
+
+// types.ts
+export type TitleSize = 'small' | 'default' | 'large';
+export type TitleAlignment = 'center' | 'left';
+
+export interface SectionTitleProps {
+  title: string;
+  subtitle?: string;
+  align?: TitleAlignment;
+  className?: string;
+  highlightWords?: string[];
+  size?: TitleSize;
+}

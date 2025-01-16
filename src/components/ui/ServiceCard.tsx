@@ -1,0 +1,46 @@
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Service } from "@/types";
+import { Clock, Sparkles, DollarSign } from "lucide-react";
+
+import { Link } from "react-router";
+import { Button } from "./button";
+
+const ServiceCard = ({ _id, duration, name, price, description }: Service) => {
+  return (
+    <Card className="h-full hover:shadow-lg transition-shadow">
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-semibold">{name}</h3>
+          <Sparkles className="w-5 h-5 text-primary" />
+        </div>
+      </CardHeader>
+
+      <CardContent>
+        <p className="text-muted-foreground mb-4">{description}</p>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-sm">
+            <Clock className="w-4 h-4 text-primary" />
+            <span>{duration} minutes</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <DollarSign className="w-4 h-4 text-primary" />
+            <span>${price.toFixed(2)}</span>
+          </div>
+        </div>
+      </CardContent>
+
+      <CardFooter>
+        <Button className="w-full">
+          <Link to={`/book?service=${_id}`}>Book Now</Link>
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};
+
+export default ServiceCard;
