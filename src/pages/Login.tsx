@@ -5,7 +5,7 @@ const Login = () => {
   const location = useLocation()
   return (
     <div>
-      <LoginForm redirect={location?.state?.redirect}/>
+      <LoginForm redirect={location?.state}/>
     </div>
   );
 };

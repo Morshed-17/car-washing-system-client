@@ -27,7 +27,7 @@ export interface Service {
 //*
 export type Slot = {
   _id: string;
-  service: Service ;
+  service: Service;
   date: string; // ISO format date string (e.g., "2024-06-15")
   startTime: string; // Time in "HH:mm" format
   endTime: string; // Time in "HH:mm" format
@@ -37,16 +37,13 @@ export type Slot = {
   __v: number;
 };
 
-
 // review
-export type Review ={
+export type Review = {
   _id: string;
   rating: number;
   feedback: string;
   username: string;
-}
-
-
+};
 
 export interface ApiErrorMessage {
   path: string; // Field that caused the error
@@ -59,6 +56,21 @@ export type ApiResponse<T> = {
   data: T;
   token?: string;
 };
+export type ApiResponseWithMeta<T> = {
+  success: true;
+  message: string;
+  statusCode: number;
+  data: {
+    data: T;
+    meta: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPage: number;
+    };
+  };
+  token?: string;
+};
 
 export type ApiError = {
   success: boolean;
@@ -67,15 +79,14 @@ export type ApiError = {
   stack?: string;
 };
 
-export type SlotStatus =  "cancelled" | "available" | "booked"
+export type SlotStatus = "cancelled" | "available" | "booked";
 // Now you can use this type for any API response
 export type SignupResponse = ApiResponse<User>;
 export type LoginResponse = ApiResponse<User & { token: string }>;
 
-
 // types.ts
-export type TitleSize = 'small' | 'default' | 'large';
-export type TitleAlignment = 'center' | 'left';
+export type TitleSize = "small" | "default" | "large";
+export type TitleAlignment = "center" | "left";
 
 export interface SectionTitleProps {
   title: string;

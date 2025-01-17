@@ -9,8 +9,8 @@ import ServiceCard from "../ui/ServiceCard";
 
 const FeaturedServices = () => {
   // Only show first 6 active services
-  const { data } = useGetAllServicesQuery(undefined);
-  const services = data?.data;
+  const { data } = useGetAllServicesQuery({});
+  const services = data?.data?.data;
   const featuredServices = services
     ?.filter((service) => !service.isDeleted)
     .slice(0, 6);

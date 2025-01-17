@@ -10,13 +10,15 @@ import AuthLayout from "@/layouts/AuthLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import ManageSlots from "@/pages/dashboard/ManageSlots";
 import ManageUesrs from "@/pages/dashboard/ManageUesrs";
-import {ManageServices} from "@/pages/dashboard/ManageServices";
+import { ManageServices } from "@/pages/dashboard/ManageServices";
+import Services from "@/pages/Services";
 
 const MainRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
+        <Route path="/services" element={<Services />} />
       </Route>
 
       <Route

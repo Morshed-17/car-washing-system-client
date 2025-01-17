@@ -1,19 +1,27 @@
-import { ApiResponse, Service } from "@/types";
+import { ApiResponse, ApiResponseWithMeta, Service } from "@/types";
 import { baseApi } from "../baseApi";
 import * as z from "zod";
 import { AddServiceSchema } from "@/schema";
 
 export const serviceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllServices: builder.query<ApiResponse<Service[]>, any>({
-      query: () => ({
-        url: "/services",
-        method: "GET",
-      }),
+    getAllServices: builder.query<
+      ApiResponseWithMeta<Service[]>,
+      Record<string, any>
+    >({
+      query: (filters) => {
+        // Build query parameters dynamically from filters
+        const queryParams = new URLSearchParams(filters).toString();
+
+        return {
+          url: `/services?${queryParams}`,
+          method: "GET",
+        };
+      },
       providesTags: ["Service"],
     }),
     getSingleService: builder.query<
-      ApiResponse<Service>,
+      ApiResponseWithMeta<Service>,
       { serviceId: string }
     >({
       query: (payload) => ({
@@ -23,7 +31,7 @@ export const serviceApi = baseApi.injectEndpoints({
       providesTags: ["Service"],
     }),
     addService: builder.mutation<
-      ApiResponse<Service[]>,
+      ApiResponseWithMeta<Service[]>,
       z.infer<typeof AddServiceSchema>
     >({
       query: (payload) => ({
@@ -34,7 +42,7 @@ export const serviceApi = baseApi.injectEndpoints({
       invalidatesTags: ["Service"],
     }),
     updateService: builder.mutation<
-      ApiResponse<Service[]>,
+      ApiResponseWithMeta<Service[]>,
       {
         updatedService: z.infer<typeof AddServiceSchema>;
         serviceId: string;
@@ -62,5 +70,5 @@ export const {
   useAddServiceMutation,
   useDeleteServiceMutation,
   useUpdateServiceMutation,
-  useGetSingleServiceQuery
+  useGetSingleServiceQuery,
 } = serviceApi;

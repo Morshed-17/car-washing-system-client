@@ -10,13 +10,12 @@ const ReviewsSection = () => {
   const location = useLocation();
   const handleLogin = () => {
     navigate("/auth/login", {
-      state: { redirect: location.pathname },
-      
+      state: { redirect: location.pathname, sectionId: "review" },
     });
   };
 
   return (
-    <div>
+    <section id="review">
       <SectionTitle
         title="Customer Reviews"
         subtitle="Customers have shared their experience"
@@ -40,7 +39,7 @@ const ReviewsSection = () => {
           </div>
         </section>
       </div>
-    </div>
+    </section>
   );
 };
 

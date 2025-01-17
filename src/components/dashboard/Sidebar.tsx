@@ -23,7 +23,6 @@ const data = {
       title: "Manage CarWash System",
       url: "#",
       items: [
-        
         {
           title: "Services",
           url: "/dashboard/services",
@@ -31,7 +30,6 @@ const data = {
         {
           title: "Slots",
           url: "/dashboard/slots",
-          isActive: true,
         },
         {
           title: "Users",

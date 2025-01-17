@@ -12,7 +12,7 @@ import { Button } from "./button";
 
 const ServiceCard = ({ _id, duration, name, price, description }: Service) => {
   return (
-    <Card className="h-full hover:shadow-lg transition-shadow">
+    <Card className="h-full hover:shadow-lg transition-shadow flex flex-col ">
       <CardHeader>
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-semibold">{name}</h3>
@@ -20,7 +20,7 @@ const ServiceCard = ({ _id, duration, name, price, description }: Service) => {
         </div>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="flex-1">
         <p className="text-muted-foreground mb-4">{description}</p>
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-sm">
@@ -35,8 +35,8 @@ const ServiceCard = ({ _id, duration, name, price, description }: Service) => {
       </CardContent>
 
       <CardFooter>
-        <Button className="w-full">
-          <Link to={`/book?service=${_id}`}>Book Now</Link>
+        <Button className="w-full" asChild>
+          <Link to={`/services/${_id}`}>View Details</Link>
         </Button>
       </CardFooter>
     </Card>
