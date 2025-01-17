@@ -29,6 +29,7 @@ export function RegisterForm() {
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -67,7 +68,7 @@ export function RegisterForm() {
       //* Dispatch user data and token
       if (loginResult.success && loginResult.token) {
         dispatch(setUser({ user: loginResult.data, token: loginResult.token }));
-        toast.success("Account Created Succesfully")
+        toast.success("Account Created Succesfully");
         navigate("/");
       }
     } catch (err: any) {
@@ -178,7 +179,8 @@ export function RegisterForm() {
           </div>
           <Button className="w-full">
             {isLoading ? (
-              <Loader2 className="rotate-180"></Loader2>
+              <Loader2 className="rotate-180">
+              </Loader2>
             ) : (
               "Register"
             )}

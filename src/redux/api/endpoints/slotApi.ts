@@ -4,10 +4,10 @@ import { baseApi } from "../baseApi";
 export const slotApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllSlots: builder.query<ApiResponse<Slot[]>, any>({
-      query: () => ({
-        url: "/slots/availability",
-        method: "GET",
-      }),
+      query: (query) => {
+        const queryParams = new URLSearchParams(query).toString();
+        return { url: `/slots/availability?${queryParams}`, method: "GET" };
+      },
       providesTags: ["Slot"],
     }),
     addSlot: builder.mutation<ApiResponse<Slot[]>, any>({
@@ -34,4 +34,8 @@ export const slotApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllSlotsQuery, useAddSlotMutation, useUpdateSlotStatusMutation } = slotApi;
+export const {
+  useGetAllSlotsQuery,
+  useAddSlotMutation,
+  useUpdateSlotStatusMutation,
+} = slotApi;

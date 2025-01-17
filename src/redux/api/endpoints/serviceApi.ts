@@ -20,8 +20,10 @@ export const serviceApi = baseApi.injectEndpoints({
       },
       providesTags: ["Service"],
     }),
+
+
     getSingleService: builder.query<
-      ApiResponseWithMeta<Service>,
+      ApiResponse<Service>,
       { serviceId: string }
     >({
       query: (payload) => ({
@@ -30,6 +32,9 @@ export const serviceApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Service"],
     }),
+
+
+
     addService: builder.mutation<
       ApiResponseWithMeta<Service[]>,
       z.infer<typeof AddServiceSchema>
@@ -41,6 +46,7 @@ export const serviceApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Service"],
     }),
+
     updateService: builder.mutation<
       ApiResponseWithMeta<Service[]>,
       {

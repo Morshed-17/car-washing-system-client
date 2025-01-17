@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -38,7 +38,9 @@ function ChangeSlotStatus({ status, id }: { status: string; id: string }) {
           {/* <SelectLabel>Fruits</SelectLabel> */}
           <SelectItem value="available">AVAILABLE</SelectItem>
           <SelectItem value="cancelled">CANCELLED</SelectItem>
-          <SelectItem value="booked" disabled>BOOKED</SelectItem>
+          <SelectItem value="booked" disabled>
+            BOOKED
+          </SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

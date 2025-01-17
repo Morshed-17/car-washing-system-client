@@ -28,12 +28,12 @@ export interface Service {
 export type Slot = {
   _id: string;
   service: Service;
-  date: string; // ISO format date string (e.g., "2024-06-15")
-  startTime: string; // Time in "HH:mm" format
-  endTime: string; // Time in "HH:mm" format
-  isBooked: "available" | "booked" | "cancelled"; // Possible states for booking
-  createdAt: string; // ISO format date-time string
-  updatedAt: string; // ISO format date-time string
+  date: string; 
+  startTime: string; 
+  endTime: string; 
+  isBooked: "available" | "booked" | "cancelled"; 
+  createdAt: string; 
+  updatedAt: string; 
   __v: number;
 };
 

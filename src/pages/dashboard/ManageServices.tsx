@@ -16,8 +16,8 @@ import {
 import { useGetAllServicesQuery } from "@/redux/api/endpoints/serviceApi";
 
 export function ManageServices() {
-  const { data, isLoading } = useGetAllServicesQuery(undefined);
-  const services = data?.data;
+  const { data, isLoading } = useGetAllServicesQuery({});
+  const services = data?.data?.data;
 
   return (
     <div>
@@ -49,7 +49,7 @@ export function ManageServices() {
                 <TableRow key={service?._id}>
                   <TableCell className="font-medium">{service?.name}</TableCell>
                   <TableCell>{service?.description}</TableCell>
-                  <TableCell>{service?.price}Tk</TableCell>
+                  <TableCell>${service?.price}</TableCell>
                   <TableCell className="">{service?.duration} Min</TableCell>
                   <TableCell className="">
                     <UpdateServiceModal _id={service?._id} />

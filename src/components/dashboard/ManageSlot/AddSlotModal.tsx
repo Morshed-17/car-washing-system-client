@@ -32,9 +32,9 @@ import { toast } from "sonner";
 
 export function AddSlotModal() {
   const [open, setOpen] = useState(false);
-  const { data } = useGetAllServicesQuery(undefined); // Fetch services
+  const { data } = useGetAllServicesQuery({}); // Fetch services
   const [addSlot] = useAddSlotMutation();
-  const services = data?.data;
+  const services = data?.data?.data;
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [startTime, setStartTime] = useState<string>("");

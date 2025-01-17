@@ -12,6 +12,7 @@ import ManageSlots from "@/pages/dashboard/ManageSlots";
 import ManageUesrs from "@/pages/dashboard/ManageUesrs";
 import { ManageServices } from "@/pages/dashboard/ManageServices";
 import Services from "@/pages/Services";
+import ServiceDetails from "@/pages/ServiceDetails";
 
 const MainRouter = () => {
   return (
@@ -19,6 +20,7 @@ const MainRouter = () => {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/services/:id" element={<ServiceDetails />} />
       </Route>
 
       <Route
