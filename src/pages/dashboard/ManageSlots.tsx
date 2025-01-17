@@ -14,6 +14,7 @@ import {
 import { useGetAllSlotsQuery } from "@/redux/api/endpoints/slotApi";
 
 import ChangeSlotStatus from "@/components/dashboard/ManageSlot/ChangeSlotStatus";
+import { convertTo12HourFormat } from "@/lib/utils";
 
 export default function ManageSlots() {
   const { data } = useGetAllSlotsQuery(undefined);
@@ -43,8 +44,10 @@ export default function ManageSlots() {
                 {slot?.service.name as string}
               </TableCell>
               <TableCell>{slot.date}</TableCell>
-              <TableCell>{slot.startTime}</TableCell>
-              <TableCell className="">{slot.endTime}</TableCell>
+              <TableCell>{convertTo12HourFormat(slot.startTime)}</TableCell>
+              <TableCell className="">
+                {convertTo12HourFormat(slot.endTime)}
+              </TableCell>
 
               <TableCell className="text-right">
                 <ChangeSlotStatus status={slot.isBooked} id={slot._id} />
