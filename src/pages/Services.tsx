@@ -74,13 +74,16 @@ export default function Services() {
           </motion.div>
         )}
 
-        <div className="mt-6">
+        {
+          !error && <div className="mt-6">
           <PaginationComponent
             page={page}
             setPage={setPage}
             totalPages={totalPages}
           />
         </div>
+        }
+        
       </Container>
     </section>
   );
