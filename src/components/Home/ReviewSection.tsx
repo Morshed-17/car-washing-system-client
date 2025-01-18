@@ -13,7 +13,11 @@ const ReviewsSection = () => {
 
   const handleLogin = () => {
     navigate("/auth/login", {
-      state: { redirect: location.pathname, sectionId: "review" },
+      state: {
+        redirect: location.pathname,
+        sectionId: "review",
+        fromComponent: "reviews",
+      },
     });
   };
 

@@ -23,7 +23,13 @@ import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/features/userSlice";
 import { toast } from "sonner";
 
-export function LoginForm({ redirect }: any) {
+interface RedirectState {
+  redirect?: string;
+  sectionId?: string;
+  fromComponent?: string;
+}
+
+export function LoginForm({ redirect }: { redirect: RedirectState }) {
   console.log(redirect);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -36,6 +42,22 @@ export function LoginForm({ redirect }: any) {
     },
   });
 
+  const handleSuccessFullLogin = (redirectData: RedirectState) => {
+    navigate(redirectData?.redirect || "/");
+
+    if (redirectData?.sectionId) {
+      requestAnimationFrame(() => {
+        const element = document.getElementById(redirectData.sectionId!);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      });
+    }
+  };
+
   const onSubmit = async () => {
     const formData = form.getValues();
     const { email, password } = formData;
@@ -46,12 +68,8 @@ export function LoginForm({ redirect }: any) {
         dispatch(setUser({ user: result.data, token: result.token }));
         toast.success("Account Logged In Succesfully");
 
-        navigate(redirect?.redirect || "/");
-        setTimeout(() => {
-          document
-            .getElementById(redirect?.sectionId)
-            ?.scrollIntoView({ behavior: "smooth" });
-        }, 0);
+        // handle redirect with the enhanced function
+        handleSuccessFullLogin(redirect);
       }
     } catch (err: any) {
       const error = err.data as ApiError;
