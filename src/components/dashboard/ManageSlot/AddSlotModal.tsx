@@ -18,17 +18,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar"; // Import the calendar
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+
 import { useGetAllServicesQuery } from "@/redux/api/endpoints/serviceApi";
 import { format } from "date-fns";
 import { useAddSlotMutation } from "@/redux/api/endpoints/slotApi";
 import { ApiError } from "@/types";
 import { toast } from "sonner";
+import DatePickerComponent from "@/components/shared/DatePickerComponent";
 
 export function AddSlotModal() {
   const [open, setOpen] = useState(false);
@@ -36,7 +32,7 @@ export function AddSlotModal() {
   const [addSlot] = useAddSlotMutation();
   const services = data?.data?.data;
   const [selectedService, setSelectedService] = useState<string | null>(null);
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [date, setDate] = useState<Date | undefined>();
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
 
@@ -101,16 +97,7 @@ export function AddSlotModal() {
             <Label htmlFor="date" className="text-right">
               Date
             </Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline" className="w-full col-span-3">
-                  {date ? format(date, "PPP") : "Pick a date"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <Calendar mode="single" selected={date} onSelect={setDate} />
-              </PopoverContent>
-            </Popover>
+            <DatePickerComponent date={date} setDate={setDate} />
           </div>
 
           {/* Start Time */}

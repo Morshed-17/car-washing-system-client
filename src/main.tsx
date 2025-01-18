@@ -8,7 +8,6 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "sonner";
-import ScrollToTop from "./components/ui/ScrollToTop";
 import ScrollToTopBtn from "./components/shared/ScrollToTopBtn";
 
 createRoot(document.getElementById("root")!).render(
@@ -19,7 +18,6 @@ createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
             <ScrollToTopBtn />
-            <ScrollToTop />
             <MainRouter />
           </ThemeProvider>
         </BrowserRouter>
