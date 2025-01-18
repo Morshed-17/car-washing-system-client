@@ -49,7 +49,7 @@ export function ManageServices() {
                 <TableRow key={service?._id}>
                   <TableCell className="font-medium">{service?.name}</TableCell>
                   <TableCell>{service?.description}</TableCell>
-                  <TableCell>${service?.price}</TableCell>
+                  <TableCell>{service?.price}Tk</TableCell>
                   <TableCell className="">{service?.duration} Min</TableCell>
                   <TableCell className="">
                     <UpdateServiceModal _id={service?._id} />

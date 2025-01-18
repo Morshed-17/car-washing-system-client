@@ -10,6 +10,14 @@ export const slotApi = baseApi.injectEndpoints({
       },
       providesTags: ["Slot"],
     }),
+    getSingleSlot: builder.query<ApiResponse<Slot>, string>({
+    
+      query: (id) => {
+        
+        return { url: `/services/slots/${id}`, method: "GET" };
+      },
+      providesTags: ["Slot"],
+    }),
     addSlot: builder.mutation<ApiResponse<Slot[]>, any>({
       query: (payload) => ({
         url: "/services/slots",
@@ -38,4 +46,5 @@ export const {
   useGetAllSlotsQuery,
   useAddSlotMutation,
   useUpdateSlotStatusMutation,
+  useGetSingleSlotQuery,
 } = slotApi;

@@ -5,8 +5,8 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Service } from "@/types";
-import { Clock, Sparkles, DollarSign } from "lucide-react";
-
+import { Clock, Sparkles } from "lucide-react";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Link } from "react-router";
 import { Button } from "./button";
 
@@ -28,8 +28,8 @@ const ServiceCard = ({ _id, duration, name, price, description }: Service) => {
             <span>{duration} minutes</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
-            <DollarSign className="w-4 h-4 text-primary" />
-            <span>${price.toFixed(2)}</span>
+            <FaBangladeshiTakaSign  className="w-4 h-4 text-primary" />
+            <span>{price}Tk</span>
           </div>
         </div>
       </CardContent>

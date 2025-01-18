@@ -13,6 +13,7 @@ import ManageUesrs from "@/pages/dashboard/ManageUesrs";
 import { ManageServices } from "@/pages/dashboard/ManageServices";
 import Services from "@/pages/Services";
 import ServiceDetails from "@/pages/ServiceDetails";
+import Booking from "@/pages/Booking";
 
 const MainRouter = () => {
   return (
@@ -21,6 +22,14 @@ const MainRouter = () => {
         <Route index element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/services/:id" element={<ServiceDetails />} />
+        <Route
+          path="/booking/:id"
+          element={
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <Booking />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       <Route

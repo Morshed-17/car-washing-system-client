@@ -14,19 +14,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Container from "@/components/ui/Container";
 import { useGetSingleServiceQuery } from "@/redux/api/endpoints/serviceApi";
 import { useGetAllSlotsQuery } from "@/redux/api/endpoints/slotApi";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Slot } from "@/types";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { convertTo12HourFormat } from "@/lib/utils";
-import {
-  Calendar,
-  Clock,
-  Loader2,
-  AlertCircle,
-  BadgeDollarSign,
-  Clock3,
-} from "lucide-react";
+import { Calendar, Clock, Loader2, AlertCircle, Clock3 } from "lucide-react";
 import DatePickerComponent from "@/components/shared/DatePickerComponent";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 const ServiceDetails = () => {
   const { id } = useParams();
@@ -34,6 +28,7 @@ const ServiceDetails = () => {
   const today = new Date();
   const [date, setDate] = useState<Date | undefined>(today);
   const [queryDate, setQueryDate] = useState(format(today, "yyyy-MM-dd"));
+  const navigate = useNavigate();
 
   const {
     data: serviceData,
@@ -71,7 +66,7 @@ const ServiceDetails = () => {
   };
 
   const handleBookNow = () => {
-    console.log(`Booking slot: ${selectedSlot}`);
+    navigate(`/booking/${selectedSlot}`);
   };
 
   const renderServiceDetails = () => {
@@ -108,8 +103,8 @@ const ServiceDetails = () => {
         </CardDescription>
         <div className="mt-6 space-y-3">
           <div className="flex items-center gap-2 text-lg">
-            <BadgeDollarSign className="h-5 w-5 text-primary" />
-            <span className="font-medium">${service?.price}</span>
+            <FaBangladeshiTakaSign className="h-5 w-5 text-primary" />
+            <span className="font-medium">{service?.price}Tk</span>
           </div>
           <div className="flex items-center gap-2 text-lg">
             <Clock3 className="h-5 w-5 text-primary" />
@@ -137,8 +132,7 @@ const ServiceDetails = () => {
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Unavailable</AlertTitle>
           <AlertDescription>
-            This service is not available for the selected date. Please try
-            another date.
+            No time slots found for this. Please try another date.
           </AlertDescription>
         </Alert>
       );
@@ -151,8 +145,8 @@ const ServiceDetails = () => {
           <AlertTitle>No Available Slots</AlertTitle>
           <AlertDescription>
             No appointments available for{" "}
-            {format(date? date : "", "MMMM d, yyyy") || "This Date"}. Please select
-            another date.
+            {format(date ? date : "", "MMMM d, yyyy") || "This Date"}. Please
+            select another date.
           </AlertDescription>
         </Alert>
       );
@@ -160,37 +154,46 @@ const ServiceDetails = () => {
 
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {slots.map((slot: Slot) => (
-          <Button
-            key={slot._id}
-            variant={slot.isBooked === "booked" ? "secondary" : "outline"}
-            disabled={slot.isBooked === "booked"}
-            onClick={() => handleSlotSelect(slot._id)}
-            className={`
-              h-auto py-3 px-4 flex flex-col items-center gap-2
-              transition-all duration-200 hover:scale-102
-              ${
-                selectedSlot === slot._id
-                  ? "ring-2 ring-primary border-primary"
-                  : ""
-              }
-              ${slot.isBooked === "booked" ? "opacity-50" : ""}
-            `}
-          >
-            <div className="flex items-center gap-2 text-sm font-medium">
-              <Calendar className="h-4 w-4" />
-              {format(new Date(slot.date), "MMM dd, yyyy")}
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Clock className="h-4 w-4" />
-              {convertTo12HourFormat(slot.startTime)} -{" "}
-              {convertTo12HourFormat(slot.endTime)}
-            </div>
-            {slot.isBooked === "booked" && (
-              <span className="text-xs text-muted-foreground mt-1">Booked</span>
-            )}
-          </Button>
-        ))}
+        {slots.map((slot: Slot) => {
+          if (slot.isBooked === "cancelled") {
+            return;
+          }
+
+          return (
+            <Button
+              key={slot._id}
+              variant={slot.isBooked === "booked" ? "secondary" : "outline"}
+              disabled={slot.isBooked === "booked"}
+              onClick={() => handleSlotSelect(slot._id)}
+              className={`
+            h-auto py-3 px-4 flex flex-col items-center gap-2
+            transition-all duration-200 hover:scale-102
+            ${
+              selectedSlot === slot._id
+                ? "ring-2 ring-primary border-primary"
+                : ""
+            }
+            ${slot.isBooked === "booked" ? "opacity-50" : ""}
+            
+          `}
+            >
+              <div className="flex items-center gap-2 text-sm font-medium">
+                <Calendar className="h-4 w-4" />
+                {format(new Date(slot.date), "MMM dd, yyyy")}
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <Clock className="h-4 w-4" />
+                {convertTo12HourFormat(slot.startTime)} -{" "}
+                {convertTo12HourFormat(slot.endTime)}
+              </div>
+              {slot.isBooked === "booked" && (
+                <span className="text-xs text-muted-foreground mt-1">
+                  Booked
+                </span>
+              )}
+            </Button>
+          );
+        })}
       </div>
     );
   };
@@ -227,7 +230,7 @@ const ServiceDetails = () => {
               {renderSlots()}
             </div>
           </CardContent>
-          <CardFooter className="bg-muted/30 mt-4">
+          <CardFooter className=" mt-4">
             <Button
               onClick={handleBookNow}
               disabled={!selectedSlot}
@@ -236,7 +239,7 @@ const ServiceDetails = () => {
               {slotLoading ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
-                "Confirm Booking"
+                "Book This Service"
               )}
             </Button>
           </CardFooter>

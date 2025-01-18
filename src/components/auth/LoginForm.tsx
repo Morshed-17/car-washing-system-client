@@ -27,6 +27,7 @@ interface RedirectState {
   redirect?: string;
   sectionId?: string;
   fromComponent?: string;
+  from: string;
 }
 
 export function LoginForm({ redirect }: { redirect: RedirectState }) {
@@ -43,7 +44,7 @@ export function LoginForm({ redirect }: { redirect: RedirectState }) {
   });
 
   const handleSuccessFullLogin = (redirectData: RedirectState) => {
-    navigate(redirectData?.redirect || "/");
+    navigate(redirectData?.redirect || redirect?.from || "/");
 
     if (redirectData?.sectionId) {
       requestAnimationFrame(() => {
