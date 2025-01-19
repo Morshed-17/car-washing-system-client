@@ -1,10 +1,12 @@
 import { ApiResponse, LoginResponse, SignupResponse, User } from "@/types";
 import { baseApi } from "../baseApi";
 
-
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    register: builder.mutation<SignupResponse, Partial<User & {password: string}> > ({
+    register: builder.mutation<
+      SignupResponse,
+      Partial<User & { password: string }>
+    >({
       query: (user) => ({
         url: "/auth/signup",
         method: "POST",
@@ -20,12 +22,36 @@ export const authApi = baseApi.injectEndpoints({
         }),
       }
     ),
-    getAllUsers: builder.query<ApiResponse<User>, any >({
+    getAllUsers: builder.query<ApiResponse<User>, any>({
       query: () => ({
-        url: "/"
-      })
-    })
+        url: "/",
+      }),
+    }),
+    getSignleUser: builder.query<ApiResponse<User>, string>({
+      query: (id) => ({
+        url: `/auth/user/${id}`,
+      }),
+    }),
+    updateUser: builder.mutation<
+      ApiResponse<User>,
+      {
+        id: string;
+        payload: Partial<User>;
+      }
+    >({
+      query: ({ id, payload }) => ({
+        url: `/auth/update-user/${id}`,
+        method: "PUT",
+
+        body: payload,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useUpdateUserMutation,
+  useGetSignleUserQuery,
+} = authApi;

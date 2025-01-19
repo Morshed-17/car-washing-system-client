@@ -14,6 +14,7 @@ import { ManageServices } from "@/pages/dashboard/ManageServices";
 import Services from "@/pages/Services";
 import ServiceDetails from "@/pages/ServiceDetails";
 import Booking from "@/pages/Booking";
+import UserDashboard from "@/layouts/UserDashboard";
 
 const MainRouter = () => {
   return (
@@ -45,6 +46,15 @@ const MainRouter = () => {
         <Route path="slots" element={<ManageSlots />} />
         <Route path="users" element={<ManageUesrs />} />
       </Route>
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute allowedRoles={["user"]}>
+            <UserDashboard />
+          </ProtectedRoute>
+        }
+      ></Route>
+
       <Route path="/auth" element={<AuthLayout />}>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
