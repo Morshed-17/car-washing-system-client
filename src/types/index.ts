@@ -28,13 +28,23 @@ export interface Service {
 export type Slot = {
   _id: string;
   service: Service;
-  date: string; 
-  startTime: string; 
-  endTime: string; 
-  isBooked: "available" | "booked" | "cancelled"; 
-  createdAt: string; 
-  updatedAt: string; 
+  date: string;
+  startTime: string;
+  endTime: string;
+  isBooked: "available" | "booked" | "cancelled";
+  createdAt: string;
+  updatedAt: string;
   __v: number;
+};
+
+export type TBooking = {
+  user: User;
+  slot: Slot;
+  paymentStatus: "Pending" | "Paid" | "Failed";
+  transactionId: string;
+  totalPrice: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
 // review

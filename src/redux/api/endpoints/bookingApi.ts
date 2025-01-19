@@ -1,4 +1,4 @@
-import { ApiResponse } from "@/types";
+import { ApiResponse, TBooking } from "@/types";
 import { baseApi } from "../baseApi";
 
 export const bookingApi = baseApi.injectEndpoints({
@@ -13,7 +13,13 @@ export const bookingApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
+    getMyBooking: builder.query<ApiResponse<TBooking[]>, any>({
+      query: () => ({
+        url: "my-bookings",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateBookingMutation } = bookingApi;
+export const { useCreateBookingMutation, useGetMyBookingQuery } = bookingApi;

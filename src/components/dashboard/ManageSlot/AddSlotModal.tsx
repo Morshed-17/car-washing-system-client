@@ -53,7 +53,11 @@ export function AddSlotModal() {
       if (result.success) {
         toast.success("Slots added successfully");
       }
-      console.log(result);
+      setSelectedService(null);
+      setDate(undefined);
+      setStartTime("");
+      setEndTime("");
+      setOpen(false);
     } catch (err) {
       const error = err as ApiError;
       console.log(error);
