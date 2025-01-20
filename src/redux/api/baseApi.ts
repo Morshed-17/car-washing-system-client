@@ -7,6 +7,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `https://car-washing-system-bice.vercel.app/api`,
+    credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
       const token = state.user.token;
