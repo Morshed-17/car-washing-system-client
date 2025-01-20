@@ -76,7 +76,7 @@ export default function ManageBookings() {
                   {bookings?.map((booking) => (
                     <TableRow key={booking.transactionId}>
                       <TableCell className="font-medium">
-                        {booking.user.email}
+                        {booking?.user?.email}
                       </TableCell>
                       <TableCell>
                         {booking.slot.service.name} <br />
