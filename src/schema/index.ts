@@ -37,7 +37,9 @@ export const AddServiceSchema = z.object({
   description: z
     .string()
     .min(1, { message: "Description is required" })
-    .max(500, { message: "Service Description must be less than 500 characters" }),
+    .max(500, {
+      message: "Service Description must be less than 500 characters",
+    }),
   price: z.coerce
     .number({ invalid_type_error: "Price must be a number" })
     .positive({ message: "Price must be greater than 0" }),
@@ -45,4 +47,5 @@ export const AddServiceSchema = z.object({
     .number({ invalid_type_error: "Duration must be a number" })
     .positive({ message: "Duration must be greater than 0" }),
   isDeleted: z.boolean(),
+  image: z.string().url({ message: "Image must be a valid URL" }),
 });

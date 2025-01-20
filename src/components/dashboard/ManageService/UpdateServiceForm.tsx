@@ -19,7 +19,8 @@ import {
 } from "@/redux/api/endpoints/serviceApi";
 import { toast } from "sonner";
 import { ApiError } from "@/types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { uploadToCloudinary, validateImage } from "@/lib/utils";
 
 interface UpdateServiceFormProps {
   onClose: () => void;
@@ -31,15 +32,17 @@ export default function UpdateServiceForm({
   _id,
 }: UpdateServiceFormProps) {
   const { data } = useGetSingleServiceQuery({ serviceId: _id });
-
   const [updateService] = useUpdateServiceMutation();
+  const [isUploading, setIsUploading] = useState(false);
+
   const form = useForm<z.infer<typeof AddServiceSchema>>({
     resolver: zodResolver(AddServiceSchema.partial()),
     defaultValues: {
       name: "",
+      description: "",
       duration: undefined,
       price: undefined,
-      description: "",
+      image: "",
     },
   });
 
@@ -48,15 +51,16 @@ export default function UpdateServiceForm({
     if (data?.data) {
       form.reset({
         name: data.data.name || "",
+        description: data.data.description || "",
         duration: data.data.duration || undefined,
         price: data.data.price || undefined,
-        description: data.data.description || "",
+        image: data.data.image || "",
       });
     }
   }, [data, form]);
 
+  // Submit handler
   async function onSubmit(values: z.infer<typeof AddServiceSchema>) {
-    console.log(values);
     try {
       const result = await updateService({
         updatedService: values,
@@ -69,9 +73,55 @@ export default function UpdateServiceForm({
       toast.error(error?.message);
     }
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {/* Service Image */}
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Service Image</FormLabel>
+              <FormControl>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={async (event) => {
+                    const file = event.target.files?.[0];
+                    if (!file) return;
+                    const errorMessage = validateImage(file);
+                    if (errorMessage) {
+                      toast.error(errorMessage);
+                      return;
+                    }
+                    setIsUploading(true);
+                    try {
+                      const imageUrl = await uploadToCloudinary(file);
+                      form.setValue("image", imageUrl);
+                      toast.success("Image uploaded successfully!");
+                    } catch (error) {
+                      toast.error("Failed to upload image");
+                    } finally {
+                      setIsUploading(false);
+                    }
+                  }}
+                />
+              </FormControl>
+              {field.value && (
+                <img
+                  src={field.value}
+                  alt="Service"
+                  className="mt-2 w-32 h-32 object-cover"
+                />
+              )}
+              {isUploading && <p>Uploading...</p>}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* Service Name */}
         <FormField
           control={form.control}
           name="name"
@@ -85,6 +135,8 @@ export default function UpdateServiceForm({
             </FormItem>
           )}
         />
+
+        {/* Service Description */}
         <FormField
           control={form.control}
           name="description"
@@ -99,6 +151,7 @@ export default function UpdateServiceForm({
           )}
         />
 
+        {/* Service Duration */}
         <FormField
           control={form.control}
           name="duration"
@@ -106,12 +159,14 @@ export default function UpdateServiceForm({
             <FormItem>
               <FormLabel>Service Duration In Minutes</FormLabel>
               <FormControl>
-                <Input placeholder="Basic Car Wash" type="number" {...field} />
+                <Input placeholder="60" type="number" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        {/* Price */}
         <FormField
           control={form.control}
           name="price"
@@ -125,8 +180,12 @@ export default function UpdateServiceForm({
             </FormItem>
           )}
         />
+
+        {/* Submit Button */}
         <DialogFooter>
-          <Button type="submit">Update</Button>
+          <Button type="submit" disabled={isUploading}>
+            Update
+          </Button>
         </DialogFooter>
       </form>
     </Form>

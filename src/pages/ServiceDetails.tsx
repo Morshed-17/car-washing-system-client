@@ -68,7 +68,6 @@ const ServiceDetails = () => {
   const handleBookNow = () => {
     navigate(`/booking/${selectedSlot}`);
   };
-  
 
   const renderServiceDetails = () => {
     if (serviceLoading) {
@@ -98,18 +97,34 @@ const ServiceDetails = () => {
 
     return (
       <>
-        <CardTitle className="text-2xl">{service?.name}</CardTitle>
-        <CardDescription className="text-base mt-2">
-          {service?.description}
-        </CardDescription>
-        <div className="mt-6 space-y-3">
-          <div className="flex items-center gap-2 text-lg">
-            <FaBangladeshiTakaSign className="h-5 w-5 text-primary" />
-            <span className="font-medium">{service?.price}Tk</span>
+        <div className="relative max-h-96 rounded-xl overflow-hidden mb-6">
+          <img
+            src={service?.image}
+            alt={service?.name}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+        </div>
+
+        <div className="space-y-6">
+          <div className="space-y-3">
+            <CardTitle className="text-3xl font-bold">
+              {service?.name}
+            </CardTitle>
+            <CardDescription className="text-base leading-relaxed">
+              {service?.description}
+            </CardDescription>
           </div>
-          <div className="flex items-center gap-2 text-lg">
-            <Clock3 className="h-5 w-5 text-primary" />
-            <span className="font-medium">{service?.duration} minutes</span>
+
+          <div className="flex flex-wrap gap-6">
+            <div className="flex items-center gap-2.5 bg-primary/10 rounded-full px-4 py-2">
+              <FaBangladeshiTakaSign className="h-5 w-5 text-primary shrink-0" />
+              <span className="font-medium">{service?.price}Tk</span>
+            </div>
+            <div className="flex items-center gap-2.5 bg-primary/10 rounded-full px-4 py-2">
+              <Clock3 className="h-5 w-5 text-primary shrink-0" />
+              <span className="font-medium">{service?.duration} minutes</span>
+            </div>
           </div>
         </div>
       </>

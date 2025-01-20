@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useAddServiceMutation } from "@/redux/api/endpoints/serviceApi";
 import { toast } from "sonner";
 import { ApiError } from "@/types";
+import { uploadToCloudinary, validateImage } from "@/lib/utils";
 
 interface AddServiceFormProps {
   onClose: () => void;
@@ -31,7 +32,8 @@ export default function AddServiceForm({ onClose }: AddServiceFormProps) {
       price: 0,
       description: "",
       isDeleted: false,
-    }
+      image: "",
+    },
   });
 
   async function onSubmit(values: z.infer<typeof AddServiceSchema>) {
@@ -47,6 +49,47 @@ export default function AddServiceForm({ onClose }: AddServiceFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Service Image</FormLabel>
+              <FormControl>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={async (event) => {
+                    const file = event.target.files?.[0];
+                    if (!file) return;
+
+                    const errorMessage = validateImage(file);
+                    if (errorMessage) {
+                      toast.error(errorMessage);
+                      return;
+                    }
+
+                    try {
+                      const imageUrl = await uploadToCloudinary(file);
+                      form.setValue("image", imageUrl);
+                      toast.success("Image uploaded successfully!");
+                    } catch (error) {
+                      toast.error("Failed to upload image");
+                    }
+                  }}
+                />
+                {field.value && (
+                  <img
+                    src={field.value}
+                    alt="Service"
+                    className="mt-2 w-32 h-32 object-cover"
+                  />
+                )}
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="name"
