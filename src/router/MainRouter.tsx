@@ -15,11 +15,11 @@ import Services from "@/pages/Services";
 import ServiceDetails from "@/pages/ServiceDetails";
 import Booking from "@/pages/Booking";
 
-
 import Dashboard from "@/pages/dashboard/Dashboard";
 import ManageBookings from "@/pages/dashboard/ManageBookings";
 import UserDashboard from "@/layouts/UserDashboard";
 import Reviews from "@/pages/Review";
+import About from "@/pages/About";
 
 const MainRouter = () => {
   return (
@@ -28,7 +28,15 @@ const MainRouter = () => {
         <Route index element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/services/:id" element={<ServiceDetails />} />
-        <Route path="/reviews" element={<Reviews />} />
+        <Route
+          path="/reviews"
+          element={
+            <ProtectedRoute allowedRoles={["admin", "user"]}>
+              <Reviews />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/about" element={<About />} />
         <Route
           path="/booking/:id"
           element={
