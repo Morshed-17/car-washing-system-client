@@ -53,6 +53,8 @@ export type Review = {
   rating: number;
   feedback: string;
   username: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export interface ApiErrorMessage {

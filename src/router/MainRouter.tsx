@@ -19,6 +19,7 @@ import Booking from "@/pages/Booking";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import ManageBookings from "@/pages/dashboard/ManageBookings";
 import UserDashboard from "@/layouts/UserDashboard";
+import Reviews from "@/pages/Review";
 
 const MainRouter = () => {
   return (
@@ -27,6 +28,7 @@ const MainRouter = () => {
         <Route index element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/services/:id" element={<ServiceDetails />} />
+        <Route path="/reviews" element={<Reviews />} />
         <Route
           path="/booking/:id"
           element={
