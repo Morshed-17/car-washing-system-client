@@ -67,7 +67,7 @@ export function AddSlotModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Slot</Button>
+        <Button variant="outline">Add New Slot</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

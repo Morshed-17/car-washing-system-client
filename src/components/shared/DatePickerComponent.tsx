@@ -6,15 +6,17 @@ import { Dispatch, SetStateAction } from "react";
 
 interface DatePickerComponentProps {
   date: Date | undefined;
-  setDate: Dispatch<SetStateAction<Date | undefined>> 
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
   className?: string;
-  buttonText?: string 
+  buttonText?: string;
+  disabled?: boolean;
 }
 const DatePickerComponent = ({
   date,
   setDate,
   className,
-  buttonText = "Pick a date"
+  buttonText = "Pick a date",
+  disabled = true,
 }: DatePickerComponentProps) => {
   return (
     <>
@@ -28,14 +30,18 @@ const DatePickerComponent = ({
           </Button>
         </PopoverTrigger>
         <PopoverContent>
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-            disabled={(date) =>
-              isBefore(startOfDay(date), startOfDay(new Date()))
-            }
-          />
+          {disabled ? (
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              disabled={(date) =>
+                isBefore(startOfDay(date), startOfDay(new Date()))
+              }
+            />
+          ) : (
+            <Calendar mode="single" selected={date} onSelect={setDate} />
+          )}
         </PopoverContent>
       </Popover>
     </>

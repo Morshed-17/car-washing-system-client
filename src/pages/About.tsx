@@ -11,6 +11,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Container from "@/components/ui/Container";
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -59,7 +60,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <Container className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       {/* Animated Background */}
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100 via-background to-background dark:from-blue-950"></div>
 
@@ -75,7 +76,7 @@ const About = () => {
           initial={{ y: 20 }}
           animate={{ y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 text-transparent bg-clip-text"
+          className="text-5xl md:text-7xl font-bold pb-6 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 text-transparent bg-clip-text"
         >
           CarWash Bangladesh
         </motion.h1>
@@ -280,7 +281,7 @@ const About = () => {
           </CardContent>
         </Card>
       </motion.div>
-    </div>
+    </Container>
   );
 };
 

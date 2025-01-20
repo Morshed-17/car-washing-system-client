@@ -4,6 +4,7 @@ import { baseApi } from "../baseApi";
 export const slotApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllSlots: builder.query<ApiResponse<Slot[]>, any>({
+      
       query: (query) => {
         const queryParams = new URLSearchParams(query).toString();
         return { url: `/slots/availability?${queryParams}`, method: "GET" };

@@ -62,7 +62,7 @@ export function UpcomingBookings({
         ) : bookings && bookings.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {bookings.map((booking) => (
-              <Card key={booking.slot._id} className="bg-white">
+              <Card key={booking.slot._id} >
                 <CardContent className="p-4 space-y-4">
                   <div className="flex justify-between items-start">
                     <h4 className="font-semibold">
@@ -103,7 +103,7 @@ export function UpcomingBookings({
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-500">
+          <p className="text-center ">
             No upcoming bookings found.
           </p>
         )}

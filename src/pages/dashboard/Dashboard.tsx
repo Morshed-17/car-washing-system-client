@@ -47,14 +47,14 @@ export default function Dashboard() {
     <div className="p-8 space-y-8">
       {/* Header Section */}
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-semibold text-gray-900">
+        <h1 className="text-3xl font-semibold">
           Dashboard Overview
         </h1>
         <Card className="w-auto">
           <CardContent className="py-3">
             <div className="flex items-center space-x-4">
               <div>
-                <p className="text-sm font-medium text-gray-600">
+                <p className="text-sm font-medium ">
                   Welcome back
                 </p>
                 <p className="text-lg font-semibold">Administrator</p>
@@ -68,7 +68,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+            <CardTitle className="text-sm font-medium ">
               <div className="flex items-center space-x-2">
                 <CreditCard className="h-4 w-4" />
                 <span>Total Bookings</span>
@@ -77,7 +77,7 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalBookings}</div>
-            <p className="text-sm text-gray-600 mt-2">
+            <p className="text-sm  mt-2">
               Revenue: $
               {totalRevenue.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
@@ -88,7 +88,7 @@ export default function Dashboard() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+            <CardTitle className="text-sm font-medium ">
               <div className="flex items-center space-x-2">
                 <Users className="h-4 w-4" />
                 <span>Total Users</span>
@@ -97,7 +97,7 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalUsers}</div>
-            <p className="text-sm text-gray-600 mt-2">
+            <p className="text-sm  mt-2">
               Active in last 24h: N/A
             </p>
           </CardContent>
@@ -105,7 +105,7 @@ export default function Dashboard() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+            <CardTitle className="text-sm font-medium ">
               Payment Statistics
             </CardTitle>
           </CardHeader>

@@ -68,6 +68,7 @@ const ServiceDetails = () => {
   const handleBookNow = () => {
     navigate(`/booking/${selectedSlot}`);
   };
+  
 
   const renderServiceDetails = () => {
     if (serviceLoading) {
