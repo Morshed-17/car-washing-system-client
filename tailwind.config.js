@@ -4,12 +4,7 @@ export default {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
-  		fontFamily: {
-  			sans: [
-  				'Inter',
-  				'serif'
-  			]
-  		},
+  		fontFamily: { inter: ["Inter", "serif"] },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
