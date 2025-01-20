@@ -22,6 +22,8 @@ export function ManageServices() {
   return (
     <div>
       <div>
+      <h1 className="text-xl font-bold mb-4">Service Management</h1>
+
         <AddServiceModal />
       </div>
       <Table className="mt-4">

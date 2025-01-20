@@ -15,11 +15,17 @@ export const bookingApi = baseApi.injectEndpoints({
     }),
     getMyBooking: builder.query<ApiResponse<TBooking[]>, any>({
       query: () => ({
-        url: "my-bookings",
+        url: "/my-bookings",
+        method: "GET",
+      }),
+    }),
+    getAllBookings: builder.query<ApiResponse<TBooking[]>, any>({
+      query: () => ({
+        url: "/bookings",
         method: "GET",
       }),
     }),
   }),
 });
 
-export const { useCreateBookingMutation, useGetMyBookingQuery } = bookingApi;
+export const { useCreateBookingMutation, useGetMyBookingQuery, useGetAllBookingsQuery } = bookingApi;

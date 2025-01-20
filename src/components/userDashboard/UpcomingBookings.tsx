@@ -5,13 +5,12 @@ import { Clock, Calendar } from "lucide-react";
 import { convertTo12HourFormat } from "@/lib/utils";
 import { BookingSkeleton } from "../skeletonts/BookingSkeleton";
 import { CountdownTimer } from "../shared/CountdownTimer";
+import { Service } from "@/types";
 
 interface UpcomingBooking {
   slot: {
     _id: string;
-    service: {
-      name: string;
-    };
+    service: Service;
     date: string;
     startTime: string;
     endTime: string;
@@ -43,7 +42,7 @@ export function UpcomingBookings({
         return "bg-gray-500";
     }
   };
-
+  console.log(bookings)
   return (
     <Card>
       <CardHeader>
@@ -94,9 +93,9 @@ export function UpcomingBookings({
                     </div>
                   </div>
                   <div className="text-sm font-medium">
-                    Starts{" "} in:
+                    Starts in:{" "}
                     <CountdownTimer
-                      targetDate={`${booking.slot.date}T${booking.slot.startTime}:00`}
+                      targetDateTime={`${booking.slot.date}T${booking.slot.startTime}:00`}
                     />
                   </div>
                 </CardContent>

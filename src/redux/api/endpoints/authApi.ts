@@ -22,10 +22,11 @@ export const authApi = baseApi.injectEndpoints({
         }),
       }
     ),
-    getAllUsers: builder.query<ApiResponse<User>, any>({
+    getAllUsers: builder.query<ApiResponse<User[]>, any>({
       query: () => ({
-        url: "/",
+        url: "/auth/users",
       }),
+      providesTags: ["User"],
     }),
     getSignleUser: builder.query<ApiResponse<User>, string>({
       query: (id) => ({
@@ -45,6 +46,7 @@ export const authApi = baseApi.injectEndpoints({
 
         body: payload,
       }),
+      invalidatesTags: ["User"],
     }),
   }),
 });
@@ -54,4 +56,5 @@ export const {
   useRegisterMutation,
   useUpdateUserMutation,
   useGetSignleUserQuery,
+  useGetAllUsersQuery,
 } = authApi;

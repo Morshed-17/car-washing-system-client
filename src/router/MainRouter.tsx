@@ -4,7 +4,7 @@ import Home from "../pages/Home";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
-import Dashboard from "../pages/dashboard/Dashboard";
+
 import NotFoundPage from "@/pages/NotFoundPage";
 import AuthLayout from "@/layouts/AuthLayout";
 import ProtectedRoute from "./ProtectedRoute";
@@ -14,6 +14,10 @@ import { ManageServices } from "@/pages/dashboard/ManageServices";
 import Services from "@/pages/Services";
 import ServiceDetails from "@/pages/ServiceDetails";
 import Booking from "@/pages/Booking";
+
+
+import Dashboard from "@/pages/dashboard/Dashboard";
+import ManageBookings from "@/pages/dashboard/ManageBookings";
 import UserDashboard from "@/layouts/UserDashboard";
 
 const MainRouter = () => {
@@ -42,6 +46,7 @@ const MainRouter = () => {
         }
       >
         <Route index element={<Dashboard />} />
+        <Route path="bookings" element={<ManageBookings />} />
         <Route path="services" element={<ManageServices />} />
         <Route path="slots" element={<ManageSlots />} />
         <Route path="users" element={<ManageUesrs />} />
