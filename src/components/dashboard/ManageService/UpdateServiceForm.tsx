@@ -40,8 +40,8 @@ export default function UpdateServiceForm({
     defaultValues: {
       name: "",
       description: "",
-      duration: undefined,
-      price: undefined,
+      duration: 0,
+      price: 0,
       image: "",
     },
   });
@@ -52,8 +52,8 @@ export default function UpdateServiceForm({
       form.reset({
         name: data.data.name || "",
         description: data.data.description || "",
-        duration: data.data.duration || undefined,
-        price: data.data.price || undefined,
+        duration: data.data.duration || 0,
+        price: data.data.price || 0,
         image: data.data.image || "",
       });
     }

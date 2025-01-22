@@ -78,14 +78,14 @@ export default function AddServiceForm({ onClose }: AddServiceFormProps) {
                     }
                   }}
                 />
-                {field.value && (
-                  <img
-                    src={field.value}
-                    alt="Service"
-                    className="mt-2 w-32 h-32 object-cover"
-                  />
-                )}
               </FormControl>
+              {field?.value && (
+                <img
+                  src={field?.value}
+                  alt="Service"
+                  className="mt-2 w-32 h-32 object-cover"
+                />
+              )}
               <FormMessage />
             </FormItem>
           )}
